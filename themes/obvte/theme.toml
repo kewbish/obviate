@@ -1,0 +1,8 @@
+name = "Obviate"
+license = "MIT"
+licenselink = "https://github.com/kewbish/obviate"
+min_version = "0.41"
+
+[author]
+  name = "Kewbish"
+  homepage = "https://kewbish.github.io"

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenna - A Hugo + NetlifyCMS boilerplate for teachers.</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <section>
+        <div class="header">
+            <div class="header-inner">
+                <h1>{name}</h1>
+                <p>Created with Obviate</p>
+                <a href="/posts/"><button>See all posts</button></a>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <h1>Recent Posts</h1>
+            <div class="custom-div"></div>
+            {{ range first 6 (where .Site.Pages "Params.series" "post").ByDate.Reverse }}
+            <a href="{{ .Permalink }}/index.html">
+                <h2>{{ .Title }}</h2>
+            </a>
+            <p>{{ .Summary }} - {{ .Date.Format "02 January 2006" }}</p>
+            {{ end }}
+        </div>
+        <div class="custom-div"></div>
+        <div>
+            <h1>Contact</h1>
+            <p>My email is {email} - send me a message and I'll get back to you immediately.</p>
+        </div>
+    </section>
+    <section>
+        <div class="footer">
+            <div>
+                <p><a href="https://github.com/kewbish/obviate">Obviate</a> by <a
+                        href="https://kewbish.github.io">Kewbish</a>.</p>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

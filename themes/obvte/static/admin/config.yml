@@ -1,0 +1,16 @@
+backend:
+  name: github
+  repo: {owner}/{repo}
+media_folder: static/img
+collections:
+  - name: 'post'
+    label: 'New Obviate Post'
+    folder: 'content/posts'
+    create: true
+    slug: "{{year}}{{month}}{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Publish Date', name: 'publishdate', widget: 'datetime' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
