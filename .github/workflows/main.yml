@@ -1,7 +1,8 @@
 name: Pull in values
 
 on:
-  push
+  push:
+  workflow_dispatch:
 
 jobs:
   build:
