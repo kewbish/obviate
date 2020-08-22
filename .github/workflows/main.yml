@@ -1,0 +1,46 @@
+name: Pull in values
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - name: "Check file existence"
+      uses: andstor/file-existence-action@v1
+      with:
+        files: "variables.obviate"
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - uses: actions/cache@v2
+      name: pip caches
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install Python dependencies
+      if: steps.check_files.outputs.files_exists == 'true'
+      run: |
+        python -m pip install -r requirements.txt
+    - name: Update
+      if: steps.check_files.outputs.files_exists == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |-
+        python update_variables.py
+    - name: Commit and push if changed
+      if: steps.check_files.outputs.files_exists == 'true'
+      run: |-
+        git diff
+        git config --global user.email "obviatebot@notarealdomain.com"
+        git config --global user.name "ObviateBot"
+        git add -A
+        git commit -m "Obviate // Update variables" || exit 0
+        git push
